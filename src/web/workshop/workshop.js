@@ -1,16 +1,17 @@
 import React from 'react';
-import Settings from '@splunk/react-icons/Settings';
-import Activity from '@splunk/react-icons/Activity';
-import Search from  '@splunk/react-icons/Search';
+import Settings from '@splunk/react-icons/Cog';
+import Activity from '@splunk/react-icons/Pulse';
+import Search from  '@splunk/react-icons/Magnifier';
 import Metrics from  '@splunk/react-icons/Metrics';
-import Dashboard from  '@splunk/react-icons/Dashboard';
-import Images from  '@splunk/react-icons/Images';
+import Dashboard from  '@splunk/react-icons/LayoutPanels';
+import Images from  '@splunk/react-icons/Picture';
 import ChartScatter from  '@splunk/react-icons/ChartScatter';
-import Tool from  '@splunk/react-icons/Tool';
-import Data from  '@splunk/react-icons/Data';
-import GaugeRadial from '@splunk/react-icons/GaugeRadial';
+import Tool from  '@splunk/react-icons/Wrench';
+import Data from  '@splunk/react-icons/Cylinder';
+import GaugeRadial from '@splunk/react-icons/ChartSingleValueRadial';
 import { TbAugmentedReality2, TbLayoutDashboard, TbDatabase } from "react-icons/tb";
 import {GrConfigure} from "react-icons/gr";
+import { TbTrophy } from "react-icons/tb";
 
 const labs = {
     chapters: [
@@ -32,16 +33,8 @@ const labs = {
                             "content": "chapter1/line_numbers.mdx"
                         },
                         {
-                            "title": "Search auto-format",
-                            "content": "chapter1/search_auto_format.mdx"
-                        },
-                        {
                             "title": "Themes",
                             "content": "chapter1/themes.mdx"
-                        },
-                        {
-                            "title": "Useful links",
-                            "content": "chapter1/useful_links.mdx"
                         }
                     ]
                 },
@@ -59,27 +52,23 @@ const labs = {
                         {
                             "title": "Verbose Mode",
                             "content": "chapter1/verbose_mode.mdx"
-                        },
-                        {
-                            "title": "Useful links",
-                            "content": "chapter1/useful_links.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "Reformat Search",
+                    "title": "SPL Readability",
                     "steps": [
                         {
-                            "title": "Make searches easier to read",
+                            "title": "Auto-format",
+                            "content": "chapter1/search_auto_format.mdx"
+                        },
+                        {
+                            "title": "Keyboard Shortcuts",
                             "content": "chapter1/make_searches_easier_to_read.mdx"
-                        }, 
+                        },
                         {
-                            "title": "Useful links",
-                            "content": "chapter1/useful_links.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
+                            "title": "Inline Comments",
+                            "content": "chapter1/comments.mdx"
                         }
                     ]
                 },
@@ -89,22 +78,23 @@ const labs = {
                         {
                             "title": "User language and locale",
                             "content": "chapter1/user_language_locale.mdx"
-                        }, 
-                        {
-                            "title": "Useful links",
-                            "content": "chapter1/useful_links.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "Comments",
+                    "title": "Splunk AI Assistant",
                     "steps": [
                         {
-                            "title": "",
-                            "content": "chapter1/comments.mdx"
-                        }, 
+                            "title": "Splunk AI Assistant",
+                            "content": "chapter1/ai_assistant.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Useful Links",
+                    "steps": [
                         {
-                            "title": "Useful links",
+                            "title": "Useful Links",
                             "content": "chapter1/useful_links.mdx"
                         }
                     ]
@@ -124,12 +114,7 @@ const labs = {
                         {
                             "title": "Index and Buckets",
                             "content": "chapter2/index_and_buckets.mdx"
-                        }, 
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter2/useful_links3.mdx"
                         }
-                       
                     ]
                 },
                 {
@@ -138,12 +123,7 @@ const labs = {
                         {
                             "title": "Inside a bucket",
                             "content": "chapter2/inside_bucket.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter2/useful_links3.mdx"
                         }
-                       
                     ]
                 },
                 {
@@ -158,12 +138,8 @@ const labs = {
                             "content": "chapter2/segmentation.mdx"
                         },
                         {
-                            "title": "",
+                            "title": "Highlighting TERMs",
                             "content": "chapter2/termshigh.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter2/useful_links3.mdx"
                         }
                     ]
                 },
@@ -173,44 +149,36 @@ const labs = {
                         {
                             "title": "Indexers and Clusters",
                             "content": "chapter2/indexers_and_clusters.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter2/useful_links3.mdx"
                         }
-                       
                     ]
                 },
-
                 {
                     "title": "Data aging",
                     "steps": [
                         {
                             "title": "Data Aging",
                             "content": "chapter2/data_aging.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter2/useful_links3.mdx"
                         }
-                       
                     ]
-                }, 
+                },
                 {
                     "title": "Smartstore",
                     "steps": [
                         {
                             "title": "Splunk Smartstore",
                             "content": "chapter2/smartstore.mdx"
-                        },
+                        }
+                    ]
+                },
+                {
+                    "title": "Useful Links",
+                    "steps": [
                         {
                             "title": "Useful Links",
-                            "content": "chapter2/useful_links3.mdx"
+                            "content": "chapter2/useful_links.mdx"
                         }
-                       
                     ]
                 }
-                
             ]
         },
         {
@@ -225,25 +193,28 @@ const labs = {
                         {
                             "title": "Search Basics",
                             "content": "chapter3/basic_tipps.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter3/useful_links4.mdx"
                         }
-                       
                     ]
                 },
-               
+                {
+                    "title": "SPL2",
+                    "steps": [
+                        {
+                            "title": "SPL2 Overview",
+                            "content": "chapter3/spl2_overview.mdx"
+                        },
+                        {
+                            "title": "SPL2 Modules",
+                            "content": "chapter3/spl2_modules.mdx"
+                        }
+                    ]
+                },
                 {
                     "title": "Command Types",
                     "steps": [
                         {
                             "title": "Search Command Types",
                             "content": "chapter3/types.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter3/useful_links4.mdx"
                         }
                     ]
                 },
@@ -257,37 +228,27 @@ const labs = {
                         {
                             "title": "Inspector Lab",
                             "content": "chapter3/inspector_lab.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter3/inspector_useful_links.mdx"
                         }
                     ]
                 },
-
                 {
                     "title": "Terms",
                     "steps": [
                         {
-                            "title": "",
+                            "title": "Segmentation (Recap)",
                             "content": "chapter2/segmentation.mdx"
                         },
                         {
-                            "title": "",
+                            "title": "Walklex",
                             "content": "chapter3/walklex.mdx"
                         },
                         {
-                            "title": "",
+                            "title": "TERM Directive",
                             "content": "chapter3/term.mdx"
-                        }, 
-                        
-                        {
-                            "title": "",
-                            "content": "chapter2/termshigh.mdx"
                         },
                         {
-                            "title": "Useful Links",
-                            "content": "chapter3/useful_links4.mdx"
+                            "title": "Highlighting TERMs",
+                            "content": "chapter2/termshigh.mdx"
                         }
                     ]
                 },
@@ -295,46 +256,60 @@ const labs = {
                     "title": "tstats",
                     "steps": [
                         {
-                            "title": "",
+                            "title": "tstats and PREFIX",
                             "content": "chapter3/tstats.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter3/useful_links4.mdx"
                         }
                     ]
                 },
-
+                {
+                    "title": "Search examples",
+                    "steps": [
+                        {
+                            "title": "Search examples — stock baseline",
+                            "content": "chapter3/stocks_search.mdx"
+                        },
+                        {
+                            "title": "Search examples — weather correlation",
+                            "content": "chapter3/stocks_weather.mdx"
+                        }
+                    ]
+                },
                 {
                     "title": "Search Tips",
                     "steps": [
                         {
                             "title": "What makes searches slow",
                             "content": "chapter3/more_tips.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter3/useful_links4.mdx"
                         }
-                        
                     ]
                 },
-
                 {
-                    "title": "Quiz",
+                    "title": "MCP",
                     "steps": [
                         {
-                            "title": "Quiz",
-                            "content": "chapter3/quiz.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter3/useful_links4.mdx"
+                            "title": "Splunk MCP Server",
+                            "content": "chapter3/mcp_splunk.mdx"
                         }
-                        
                     ]
                 },
-                
+                {
+                    "title": "Search recap",
+                    "steps": [
+                        {
+                            "title": "Search recap",
+                            "content": "chapter3/quiz.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Useful Links",
+                    "steps": [
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter3/useful_links.mdx"
+                        }
+                    ]
+                }
             ]
         },
 
@@ -350,10 +325,6 @@ const labs = {
                         {
                             "title": "Metrics introduction",
                             "content": "chapter4/metrics_intro.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter4/useful_links5.mdx"
                         }
                     ]
                 },
@@ -363,10 +334,6 @@ const labs = {
                         {
                             "title": "Onboarding Metrics",
                             "content": "chapter4/metrics_onboard.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter4/useful_links5.mdx"
                         }
                     ]
                 },
@@ -376,12 +343,16 @@ const labs = {
                         {
                             "title": "Searching Metrics",
                             "content": "chapter4/metrics_search.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter4/useful_links5.mdx"
                         }
-                    
+                    ]
+                },
+                {
+                    "title": "Weather Data Reference",
+                    "steps": [
+                        {
+                            "title": "TA-open-meteo Data Schema",
+                            "content": "chapter4/meteo_data.mdx"
+                        }
                     ]
                 },
                 {
@@ -390,10 +361,15 @@ const labs = {
                         {
                             "title": "Metrics Lab",
                             "content": "chapter4/metrics_lab.mdx"
-                        },
+                        }
+                    ]
+                },
+                {
+                    "title": "Stock Index Metrics",
+                    "steps": [
                         {
-                            "title": "Useful Links",
-                            "content": "chapter4/useful_links5.mdx"
+                            "title": "Stocks — Events to Metrics",
+                            "content": "chapter4/stocks_metrics.mdx"
                         }
                     ]
                 },
@@ -403,14 +379,18 @@ const labs = {
                         {
                             "title": "Phyphox Experiments",
                             "content": "chapter4/phyphox.mdx"
-                        },
+                        }
+                    ]
+                },
+                {
+                    "title": "Useful Links",
+                    "steps": [
                         {
                             "title": "Useful Links",
-                            "content": "chapter4/useful_links5.mdx"
+                            "content": "chapter4/useful_links.mdx"
                         }
                     ]
                 }
-                
             ]
         },
         {
@@ -453,9 +433,8 @@ const labs = {
                             "title": "Annotations",
                             "content": "chapter5/annotations.mdx"
                         }
-                
                     ]
-                }, 
+                },
                 {
                     "title": "Colors",
                     "steps": [
@@ -463,24 +442,26 @@ const labs = {
                             "title": "I see colors everywhere",
                             "content": "chapter5/colors.mdx"
                         }
-                
                     ]
-                }, 
+                },
                 {
                     "title": "Pseudonymization",
                     "steps": [
                         {
                             "title": "Hide user names",
                             "content": "chapter5/pseudonymization.mdx"
-                        },
+                        }
+                    ]
+                },
+                {
+                    "title": "Useful Links",
+                    "steps": [
                         {
                             "title": "Useful Links",
-                            "content": "chapter5/useful_links5.mdx"
+                            "content": "chapter5/useful_links.mdx"
                         }
-
                     ]
                 }
-                
             ]
         },
         {
@@ -490,103 +471,100 @@ const labs = {
             "icon": <TbLayoutDashboard/>,
             "sections": [
                 {
-                    "title": "Dashboard Studio",
+                    "title": "Overview",
                     "steps": [
                         {
-                            "title": "",
+                            "title": "Dashboard Studio Concepts",
                             "content": "chapter6/studio.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter6/useful_links6.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "DS Tutorial",
+                    "title": "Tutorial",
                     "steps": [
                         {
-                            "title": "Dashboard Studio Tutorial",
+                            "title": "Build Your First Dashboard",
                             "content": "chapter6/ds_tutorial.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter6/useful_links6.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "DS Annotations",
+                    "title": "Data Sources",
                     "steps": [
                         {
-                            "title": "DS Annotations",
-                            "content": "chapter6/ds_annotations.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter6/useful_links6.mdx"
-                        }
-                    ]
-                },
-                
-                {
-                    "title": "DS Base",
-                    "steps": [
-                        {
-                            "title": "DS Base",
+                            "title": "Base & Chain Searches",
                             "content": "chapter6/ds_base.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter6/useful_links6.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "DS Images",
+                    "title": "Interactivity",
                     "steps": [
                         {
-                            "title": "Working with images in DS",
+                            "title": "Tokens, Buttons & Conditional Panels",
+                            "content": "chapter6/ds_tokens.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Layout & Visualizations",
+                    "steps": [
+                        {
+                            "title": "Working with Images",
                             "content": "chapter6/ds_images.mdx"
                         },
                         {
-                            "title": "Useful Links",
-                            "content": "chapter6/useful_links6.mdx"
-                        }
-                    ]
-                },
-
-
-                {
-                    "title": "DS Tokens",
-                    "steps": [
-                        {
-                            "title": "DS Tokens",
-                            "content": "chapter6/ds_tokens.mdx"
+                            "title": "Annotations",
+                            "content": "chapter6/ds_annotations.mdx"
                         },
                         {
-                            "title": "Useful Links",
-                            "content": "chapter6/useful_links6.mdx"
+                            "title": "Tabbed Dashboards",
+                            "content": "chapter6/ds_tabbed.mdx"
+                        },
+                        {
+                            "title": "Trellis Layout",
+                            "content": "chapter6/ds_trellis.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "Pseudonymization",
+                    "title": "Custom Visualizations",
                     "steps": [
                         {
-                            "title": "Hide user names",
-                            "content": "chapter6/pseudonymization.mdx"
-                        },
+                            "title": "Custom Viz — Three Approaches",
+                            "content": "chapter6/ds_customviz.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Canvas Viz Library",
+                    "steps": [
+                        {
+                            "title": "Canvas Visualizations by rcastley",
+                            "content": "chapter6/ds_rcastley_vizs.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Sharing & Security",
+                    "steps": [
+                        {
+                            "title": "Publish without Login",
+                            "content": "chapter6/ds_publish.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Useful Links",
+                    "steps": [
                         {
                             "title": "Useful Links",
-                            "content": "chapter5/useful_links5.mdx"
+                            "content": "chapter6/useful_links.mdx"
                         }
-
                     ]
                 }
-                
-                        ]
-                    },
+            ]
+        },
         {
             "title": "7. Mobile",
             "id": "seven",
@@ -602,7 +580,6 @@ const labs = {
                         }
                     ]
                 },
-                
                 {
                     "title": "Setup Mobile",
                     "steps": [
@@ -610,20 +587,43 @@ const labs = {
                             "title": "Setup the Gateway and add your device",
                             "content": "chapter7/mobilesetup.mdx"
                         }
-                       
                     ]
                 },
                 {
-                    "title": "Mobile Links",
+                    "title": "Useful Links",
                     "steps": [
                         {
-                            "title": "Mobile Links",
-                            "content": "chapter7/mobilelinks.mdx"
+                            "title": "Useful Links",
+                            "content": "chapter7/useful_links.mdx"
                         }
-                       
                     ]
                 }
-                
+            ]
+        },
+        {
+            "title": "8. Champion Quiz",
+            "id": "eight",
+            "subtitle": "Test your knowledge",
+            "icon": <TbTrophy/>,
+            "sections": [
+                {
+                    "title": "Take the Quiz",
+                    "steps": [
+                        {
+                            "title": "Splunk4Champions Quiz",
+                            "content": "chapter8/quiz.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Useful Links",
+                    "steps": [
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter8/useful_links.mdx"
+                        }
+                    ]
+                }
             ]
         },
         {
@@ -636,8 +636,26 @@ const labs = {
                     "title": "Setup",
                     "steps": [
                         {
-                            "title": "Setup Task",
+                            "title": "Setup",
                             "content": "chapter0/setup_data.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Readme",
+                    "steps": [
+                        {
+                            "title": "Readme",
+                            "content": "chapter0/readme.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "What's new",
+                    "steps": [
+                        {
+                            "title": "What's new",
+                            "content": "chapter0/whatsnew.mdx"
                         }
                     ]
                 },

@@ -1,0 +1,10 @@
+symbol,index_name,exchange_city
+^GDAXI,DAX,Frankfurt
+^DJI,Dow Jones Industrial Average,New York
+^STOXX50E,EURO STOXX 50,Brussels
+^FTSE,FTSE 100,London
+^HSI,Hang Seng,Hong Kong
+^IXIC,Nasdaq Composite,New York
+^N225,Nikkei 225,Tokyo
+^GSPC,S&P 500,New York
+^SSMI,Swiss Market Index,Zurich

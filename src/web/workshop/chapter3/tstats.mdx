@@ -10,14 +10,25 @@ The indexed fields can be from indexed data or accelerated data models.
 *This section is based on 2020 Richard Morgans session "TSTATS and PREFIX" and 2021 .conf session "Clara-Fication: More Tstats for Your Buckets" by Clara Merriman and Martin Müller*
 
 ## Lets look at this "traditional" search in raw weather data: 
-<SplunkSearch earliest="-1y" latest="now" spl={`\`s4c_index_weather\` |timechart span=1h avg(main.temp) avg(visibility) avg(wind.speed) avg(main.humidity) avg(main.pressure) by name limit=0`}></SplunkSearch>
+<SplunkSearch earliest="-2y" latest="now" spl={`\`s4c_index_weather\` | timechart span=1h avg(main.temp) avg(wind.speed) avg(main.humidity) avg(main.pressure) by name limit=0`}></SplunkSearch>
 
 use job inspector and compare it to this "tstats" search: 
-<SplunkSearch earliest="-1y" latest="now" spl={`|tstats avg(main.temp) avg(visibility) avg(wind.speed) avg(main.humidity) avg(main.pressure) WHERE \`s4c_index_weather\` earliest=-1y latest=now()  by name _time span=1h| xyseries _time,name,avg*`}></SplunkSearch>
+<SplunkSearch earliest="-2y" latest="now" spl={`| tstats avg(main.temp) avg(wind.speed) avg(main.humidity) avg(main.pressure) WHERE \`s4c_index_weather\` earliest=-2y latest=now() by name _time span=1h | xyseries _time,name,avg*`}></SplunkSearch>
 
+## What indexes can I search?
+
+All indexes your role can access — sorted by event count:
+
+<SplunkSearch earliest="-10y" latest="now" spl={`| tstats count WHERE index=* OR index=_* BY index`}></SplunkSearch>
+
+What do you get when you search **without** specifying an index? (default search scope only):
+
+<SplunkSearch earliest="-30d" latest="now" spl={`* | stats count by index | sort -count`}></SplunkSearch>
+
+---
 
 ## Simple example: index based tstats search (works with indexed fields)
-<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where index=_* OR index=* by host`}>
+<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where \`s4c_index_internal\` by host`}>
 </SplunkSearch>
 
 ## Filter by indexed fields: 

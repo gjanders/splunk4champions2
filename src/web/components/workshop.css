@@ -1,0 +1,412 @@
+/* ── 1. Smooth tab transitions ─────────────────────────────────────────────── */
+.chapterBar div[role=tabpanel],
+.sectionBar div[role=tabpanel] {
+    animation: fadeIn 0.18s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 2. Active chapter stronger highlight ──────────────────────────────────── */
+.chapterBar > div[role=tablist] button[aria-selected=true] {
+    background-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+.chapterBar > div[role=tablist] button[aria-selected=true] svg {
+    color: #1a6c37;
+}
+
+/* ── 3. Content area max-width ─────────────────────────────────────────────── */
+.workshopContent {
+    max-width: 1200px;
+    padding: 16px 24px;
+    box-sizing: border-box;
+}
+
+/* ── READABILITY: Typography ───────────────────────────────────────────────── */
+
+/* 1. Body font size + line-height */
+.workshopContent p,
+.workshopContent li,
+.workshopContent td,
+.workshopContent th {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #2c3e50;
+}
+
+/* 2. Headings — softer color, more breathing room */
+.workshopContent h1,
+.workshopContent h2,
+.workshopContent h3,
+.workshopContent h4 {
+    color: #1a2a3a;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.workshopContent h1 { font-size: 22px; }
+.workshopContent h2 { font-size: 18px; }
+.workshopContent h3 { font-size: 15px; }
+
+/* 3. Paragraph spacing */
+.workshopContent p {
+    margin-bottom: 14px;
+}
+
+/* 4. List item spacing */
+.workshopContent ul,
+.workshopContent ol {
+    padding-left: 22px;
+    margin-bottom: 14px;
+}
+
+.workshopContent li {
+    margin-bottom: 6px;
+}
+
+/* 5. Table styling */
+.workshopContent table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+}
+
+.workshopContent th {
+    background-color: #e8f4ee;
+    color: #1a2a3a;
+    font-weight: 600;
+    text-align: left;
+    padding: 8px 12px;
+    border: 1px solid #c8ddd0;
+}
+
+.workshopContent td {
+    padding: 7px 12px;
+    border: 1px solid #dde6ea;
+}
+
+.workshopContent tr:nth-child(even) td {
+    background-color: #f7fbfd;
+}
+
+/* 6. Images — cap width, add subtle border and shadow */
+.workshopContent img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #d0dce6;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin: 12px 0;
+    display: block;
+}
+
+/* Tan shortcut / callout blocks (#DAD7CD) — must read larger & bolder than body (16px) */
+.workshopContent .s4c-kbd-callout {
+    display: block;
+    padding: 1rem 1.25rem;
+    margin: 0.6rem 0 1rem;
+    background-color: #dad7cd;
+    color: #1a2a3a;
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.35;
+    border-radius: 6px;
+    letter-spacing: 0.03em;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset;
+}
+
+/* ── 4. Code block styling ─────────────────────────────────────────────────── */
+.workshopContent code {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.95em;
+    font-weight: 600;
+    background-color: #f0f4f8;
+    border: 1px solid #d8e2ec;
+    border-radius: 3px;
+    padding: 1px 5px;
+    color: #1a3a52;
+}
+
+.workshopContent pre {
+    background-color: #1e2d3d;
+    border-radius: 6px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    margin: 16px 0;
+    border-left: 3px solid #5cc05c;
+}
+
+.workshopContent pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #d4e8ff;
+    font-size: 1.1em;
+    font-weight: 650;
+    line-height: 1.6;
+}
+
+/* ── 5. Chapter bar Splunk-brand background ────────────────────────────────── */
+/* (colour kept in ChapterBar.css — no change needed here) */
+
+/* ── 6. Scrollable chapter + section bars on narrow screens ───────────────── */
+.chapterBar > div[role=tablist],
+.sectionBar > div[role=tablist] {
+    overflow-x: auto;
+    scrollbar-width: none;       /* Firefox */
+    -ms-overflow-style: none;    /* IE/Edge */
+    flex-wrap: nowrap !important;
+}
+
+.chapterBar > div[role=tablist]::-webkit-scrollbar,
+.sectionBar > div[role=tablist]::-webkit-scrollbar {
+    display: none;               /* Chrome/Safari */
+}
+
+/* Fine-tune SearchBar control vertical alignment in workshop content */
+.workshopSearchBar [data-test="search-button"] {
+    margin-top: 16px !important;
+    transition: box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.workshopSearchBar [data-test="search-button"]:hover {
+    filter: brightness(1.03);
+}
+
+.workshopSearchBar [data-test="search-button"]:focus,
+.workshopSearchBar [data-test="search-button"]:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(26, 137, 41, 0.25) !important;
+}
+
+/* TimeRangePicker wrapper sits right before the search button */
+.workshopSearchBar [data-test="workflow-components:Search"] > div:nth-last-child(2) {
+    margin-top: 16px !important;
+}
+
+/* Slightly larger search text for workshop readability */
+.workshopSearchBar .ace_editor {
+    font-size: 16px !important;
+}
+
+/* Phase 1: SPL token color tuning for better syntax readability */
+.workshopSearchBar .ace_command {
+    color: #1f66ff !important;
+    font-weight: 600;
+}
+
+.workshopSearchBar .ace_function {
+    color: #cc26e0 !important;
+}
+
+.workshopSearchBar .ace_argument {
+    color: #2f3844 !important;
+}
+
+.workshopSearchBar .ace_modifier {
+    color: #f08c2e !important;
+}
+
+.workshopSearchBar .ace_comment {
+    color: #5c6773 !important;
+    font-style: normal;
+}
+
+.workshopSearchBar .ace_number {
+    color: #2f3844 !important;
+}
+
+.workshopSearchBar .ace_quoted,
+.workshopSearchBar .ace_string {
+    color: #2f612e !important; /* syntaxGreen */
+}
+
+/* Chapter 3 Search recap — reset control should hug label, not stretch */
+.s4c-quiz-toolbar-reset {
+    flex: 0 0 auto;
+}
+.s4c-quiz-toolbar-reset button {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: max-content;
+}
+
+/* Setup utility for trainers to switch readability mode */
+.displayModeToggle {
+    border: 1px solid #d8e2ec;
+    border-radius: 8px;
+    background: #f8fbff;
+    padding: 18px 20px;
+    margin: 8px 0 22px;
+}
+
+.displayModeToggle h3 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    line-height: 1.25;
+    color: #1a2a3a;
+}
+
+.displayModeToggle p {
+    margin: 0 0 12px;
+    font-size: 16px;
+    line-height: 1.55;
+    color: #2c3e50;
+}
+
+.displayModeToggleActions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.displayModeToggleActions button {
+    font-size: 15px !important;
+    min-height: 42px;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+.displayModeHint {
+    color: #5a6b7c;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Toggle panel grows again while Large Room is on (projector / back row) */
+.s4c-large-room .displayModeToggle {
+    padding: 22px 26px;
+    border-width: 2px;
+    border-color: #b8cfe0;
+}
+
+.s4c-large-room .displayModeToggle h3 {
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+
+.s4c-large-room .displayModeToggle p {
+    font-size: 18px;
+}
+
+.s4c-large-room .displayModeToggleActions {
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.s4c-large-room .displayModeToggleActions button {
+    font-size: 17px !important;
+    min-height: 48px;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+}
+
+.s4c-large-room .displayModeHint {
+    font-size: 16px;
+}
+
+/* Large-room: chapter (top) and section (subchapter) tab labels — match ~content scale (~16→21px) */
+.s4c-large-room .chapterBar > div[role=tablist] button {
+    font-size: 17px !important;
+    line-height: 1.2 !important;
+    min-height: 76px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+}
+.s4c-large-room .chapterBar > div[role=tablist] button svg {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+.s4c-large-room .sectionBar > div[role=tablist] {
+    height: 48px !important;
+    min-height: 48px !important;
+}
+.s4c-large-room .sectionBar > div[role=tablist] button {
+    height: 48px !important;
+    min-height: 48px !important;
+    font-size: 16px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+}
+
+/* Prev / next — align with taller section strip */
+.s4c-large-room .s4c-section-nav {
+    height: 48px !important;
+}
+.s4c-large-room .s4c-section-nav__counter {
+    font-size: 14px !important;
+    min-width: 44px !important;
+}
+.s4c-large-room .s4c-section-nav__btn {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 20px !important;
+    line-height: 22px !important;
+}
+
+/* Large-room mode tuned for training/projector readability */
+.s4c-large-room .workshopContent {
+    max-width: 1200px;
+}
+
+.s4c-large-room .workshopContent p,
+.s4c-large-room .workshopContent li,
+.s4c-large-room .workshopContent td,
+.s4c-large-room .workshopContent th {
+    font-size: 21px;
+    line-height: 1.72;
+}
+
+.s4c-large-room .workshopContent h1 { font-size: 32px; }
+.s4c-large-room .workshopContent h2 { font-size: 27px; }
+.s4c-large-room .workshopContent h3 { font-size: 22px; }
+
+.s4c-large-room .workshopSearchBar .ace_editor {
+    font-size: 22px !important;
+}
+
+.s4c-large-room .workshopContent pre code {
+    font-size: 1.35em;
+    font-weight: 650;
+}
+
+.s4c-large-room .workshopContent .s4c-kbd-callout {
+    font-size: 1.75rem;
+    padding: 1.2rem 1.4rem;
+}
+
+/* Index health check: keep table dense so all columns fit (overrides large-room body text on td/th) */
+.s4c-index-health {
+    font-size: 12px;
+    line-height: 1.35;
+    max-width: 100%;
+}
+.s4c-index-health__scroll {
+    overflow-x: auto;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
+}
+.s4c-index-health table {
+    font-size: 12px;
+}
+.s4c-index-health th,
+.s4c-index-health td {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+}
+.s4c-large-room .s4c-index-health th,
+.s4c-large-room .s4c-index-health td {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+}
+.s4c-large-room .s4c-index-health {
+    font-size: 12px;
+}

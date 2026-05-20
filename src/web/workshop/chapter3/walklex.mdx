@@ -30,5 +30,5 @@ command.
 <SplunkSearch earliest="-30d" latest="now" spl={`|walklex \`s4c_index_tutorial\` type=term prefix=http`}>
 </SplunkSearch>
 
- You may also notice the source field of the walklex output contains something like: **s4c_tutorial~0~E7F9BD44-1185-4AD9-85D0-F6DEAD372EC1**
+ You may also notice the source field of the walklex output contains something like: **s4c_www~0~E7F9BD44-1185-4AD9-85D0-F6DEAD372EC1**
  it is composed from index name, bucket id and indexer guid: **index-id-guId**
