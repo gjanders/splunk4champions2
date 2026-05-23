@@ -19,7 +19,7 @@ use job inspector and compare it to this "tstats" search:
 
 All indexes your role can access — sorted by event count:
 
-<SplunkSearch earliest="-10y" latest="now" spl={`| tstats count WHERE index=* OR index=_* BY index`}></SplunkSearch>
+<SplunkSearch earliest="-10y" latest="now" spl={`| tstats count WHERE \`s4c_index_all\` BY index`}></SplunkSearch>
 
 What do you get when you search **without** specifying an index? (default search scope only):
 

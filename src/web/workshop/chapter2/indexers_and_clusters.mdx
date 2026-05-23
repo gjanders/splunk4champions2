@@ -94,7 +94,7 @@ Full reference: [Splunk Docs — Types of commands](https://docs.splunk.com/Docu
 The Episode II article shows a search that does a DNS `lookup` per event:
 
 ```
-index=_internal sourcetype=splunkd_ui_access
+\`s4c_index_internal\` sourcetype=splunkd_ui_access
 | lookup dnslookup clientip OUTPUT clienthost
 | fillnull value="unknown"
 | stats count by clienthost
@@ -104,7 +104,7 @@ index=_internal sourcetype=splunkd_ui_access
 Even when the indexers parallelise it, they still issue a DNS query for **every** event — 348,178 queries in the article's environment. Moving the lookup **after** the `stats`:
 
 ```
-index=_internal sourcetype=splunkd_ui_access
+\`s4c_index_internal\` sourcetype=splunkd_ui_access
 | fillnull value="unknown" clientip
 | stats count by clientip
 | lookup dnslookup clientip OUTPUT clienthost

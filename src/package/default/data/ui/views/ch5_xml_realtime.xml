@@ -2,10 +2,10 @@
   <label>Ch5 — Realtime vs Refresh (XML)</label>
   <row>
     <panel>
-      <title>Realtime Search 5m window (BAD): index=_* OR index=*| timechart count by component limit=10</title>
+      <title>Realtime Search 5m window (BAD): `s4c_index_all`| timechart count by component limit=10</title>
       <chart>
         <search>
-          <query>index=_* OR index=*| timechart count by component limit=10</query>
+          <query>`s4c_index_all`| timechart count by component limit=10</query>
           <earliest>rt-5m</earliest>
           <latest>rt</latest>
           <sampleRatio>1</sampleRatio>
@@ -50,10 +50,10 @@
   </row>
   <row>
     <panel>
-      <title>5min search with 1s refresh (BETTER): index=_* OR index=*| timechart count by component limit=10</title>
+      <title>5min search with 1s refresh (BETTER): `s4c_index_all`| timechart count by component limit=10</title>
       <chart>
         <search>
-          <query>index=_* OR index=*| timechart count by component limit=10</query>
+          <query>`s4c_index_all`| timechart count by component limit=10</query>
           <earliest>-5m</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>

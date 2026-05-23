@@ -8,7 +8,7 @@ import Link from '@splunk/react-ui/Link'
 >
 > Use `tstats` to see every index your role has access to:
 
-<SplunkSearch earliest="-10y" latest="now" spl={`| tstats count WHERE index=* OR index=_* BY index`}></SplunkSearch>
+<SplunkSearch earliest="-10y" latest="now" spl={`| tstats count WHERE \`s4c_index_all\` BY index`}></SplunkSearch>
 
 > Now try searching **without** specifying `index=` at all — this shows only your **default search scope**:
 

@@ -27,10 +27,10 @@ The base search **must** be transforming (using `stats`, `timechart`, `chart`, `
 
 ```spl
 /* Transforming — works directly as a base */
-index=s4c_www | stats count sum(bytes) avg(response_time) by host status
+\`s4c_index_www\` | stats count sum(bytes) avg(response_time) by host status
 
 /* Non-transforming — must add | fields to declare available fields */
-index=s4c_www
+\`s4c_index_www\`
 | fields host, status, bytes, response_time, _time
 ```
 

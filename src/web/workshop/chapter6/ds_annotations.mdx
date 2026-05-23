@@ -40,13 +40,13 @@ The annotation data source is a regular `ds.search` entry — it just needs to r
 
 **Main chart search:**
 ```spl
-index=s4c_www
+\`s4c_index_www\`
 | timechart count by status
 ```
 
 **Annotation search:**
 ```spl
-index=s4c_www action=deploy
+\`s4c_index_www\` action=deploy
 | table _time as annotationX, version as annotationLabel
 | eval annotationColor="#f6ad55"
 ```

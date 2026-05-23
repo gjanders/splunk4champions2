@@ -17,13 +17,13 @@ Along the way you will hit every classic search performance trap from the rulebo
 
 You start by listing what's available. Your first instinct is to look at hosts across the whole environment:
 
-<SplunkSearch earliest="-24h" latest="now" spl={`| metadata type=hosts index=*`}></SplunkSearch>
+<SplunkSearch earliest="-24h" latest="now" spl={`| metadata type=hosts \`s4c_index_all\``}></SplunkSearch>
 
 This works, but it pulls from every index — including internal ones. Open Job Inspector and note the bucket scan count.
 
 A faster way: `tstats` reads the same information from the tsidx files directly, no event scanning required.
 
-<SplunkSearch earliest="-24h" latest="now" spl={`| tstats count WHERE index=* OR index=_* BY index
+<SplunkSearch earliest="-24h" latest="now" spl={`| tstats count WHERE \`s4c_index_all\` BY index
 | sort -count`}></SplunkSearch>
 
 You now see `s4c_www`, `s4c_stock_indices`, `s4c_meteo_historic`, and `s4c_weather`. The first is web logs (not relevant for this investigation). The other three are your investigation surface.
@@ -36,14 +36,14 @@ You now see `s4c_www`, `s4c_stock_indices`, `s4c_meteo_historic`, and `s4c_weath
 
 Before you write any aggregation, look at the shape of the data.
 
-<SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_stock_indices
+<SplunkSearch earliest="-7d" latest="now" spl={`\`s4c_index_stocks\`
 | head 5`}></SplunkSearch>
 
 Take note of the fields: `index_name`, `exchange_city`, `symbol`, `open`, `close`, `volume`.
 
 Same for weather:
 
-<SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_meteo_historic
+<SplunkSearch earliest="-7d" latest="now" spl={`\`s4c_index_meteo_historic\`
 | head 5`}></SplunkSearch>
 
 Note: `city`, `temperature_2m_max`, `precipitation_sum`, `date`.
@@ -58,13 +58,13 @@ The shared key will be `exchange_city` (stocks) matched with `city` (weather), a
 
 You want DAX's average close over the last year. Your first attempt filters too late:
 
-<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_stock_indices
+<SplunkSearch earliest="-1y" latest="now" spl={`\`s4c_index_stocks\`
 | stats avg(close) as avg_close by index_name
 | where index_name="DAX"`}></SplunkSearch>
 
 Splunk computes the average for **all 9 indexes** and then throws 8 away. Better:
 
-<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_stock_indices index_name=DAX
+<SplunkSearch earliest="-1y" latest="now" spl={`\`s4c_index_stocks\` index_name=DAX
 | stats avg(close) as avg_close`}></SplunkSearch>
 
 Run both. In Job Inspector, compare `eventCount` and `command.search.index` time.
@@ -77,13 +77,13 @@ Run both. In Job Inspector, compare `eventCount` and `command.search.index` time
 
 Frankfurt's average daily max temperature. The natural-but-wrong version filters with `| search` after a pipe:
 
-<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_meteo_historic
+<SplunkSearch earliest="-1y" latest="now" spl={`\`s4c_index_meteo_historic\`
 | stats avg(temperature_2m_max) by city
 | search city=Frankfurt`}></SplunkSearch>
 
 The indexers already did the work for every city. Fix it by filtering in the base search:
 
-<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_meteo_historic city=Frankfurt
+<SplunkSearch earliest="-1y" latest="now" spl={`\`s4c_index_meteo_historic\` city=Frankfurt
 | stats avg(temperature_2m_max) as avg_temp`}></SplunkSearch>
 
 > **Lesson:** `| search` after the first pipe almost always indicates a filter that belongs in the base search.
@@ -96,12 +96,12 @@ How many trading days do you have per index?
 
 A regular search scans every event:
 
-<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
+<SplunkSearch earliest="-10y" latest="now" spl={`\`s4c_index_stocks\`
 | stats count by index_name`}></SplunkSearch>
 
 `tstats` reads the same count from the tsidx files — no raw events touched:
 
-<SplunkSearch earliest="-10y" latest="now" spl={`| tstats count WHERE index=s4c_stock_indices BY index_name
+<SplunkSearch earliest="-10y" latest="now" spl={`| tstats count WHERE \`s4c_index_stocks\` BY index_name
 | sort -count`}></SplunkSearch>
 
 Both return the same numbers. Compare `runDuration` in Job Inspector — usually 10–50x faster.
@@ -114,19 +114,19 @@ Both return the same numbers. Compare `runDuration` in Job Inspector — usually
 
 The natural reach for combining datasets is `join`. It usually hurts. Try it first:
 
-<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_stock_indices index_name=DAX
+<SplunkSearch earliest="-1y" latest="now" spl={`\`s4c_index_stocks\` index_name=DAX
 | eval day=strftime(_time, "%Y-%m-%d"), close=tonumber(mvindex(close,0))
 | stats avg(close) as avg_close by day
-| join day [ search index=s4c_meteo_historic city=Frankfurt
+| join day [ search \`s4c_index_meteo_historic\` city=Frankfurt
     | eval day=coalesce(mvindex(date,0), strftime(_time, "%Y-%m-%d"))
     | stats avg(temperature_2m_max) as avg_temp by day ]`}></SplunkSearch>
 
 `join` runs the subsearch sequentially, caps the inner result at 50k rows by default, and has its own time limit. The scalable pattern is `append` followed by a collapsing `stats`:
 
-<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_stock_indices index_name=DAX
+<SplunkSearch earliest="-1y" latest="now" spl={`\`s4c_index_stocks\` index_name=DAX
 | eval day=strftime(_time, "%Y-%m-%d"), close=tonumber(mvindex(close,0))
 | stats avg(close) as avg_close by day
-| append [ search index=s4c_meteo_historic city=Frankfurt
+| append [ search \`s4c_index_meteo_historic\` city=Frankfurt
     | eval day=coalesce(mvindex(date,0), strftime(_time, "%Y-%m-%d"))
     | stats avg(temperature_2m_max) as avg_temp by day ]
 | stats values(avg_close) as avg_close values(avg_temp) as avg_temp by day
@@ -140,10 +140,10 @@ The natural reach for combining datasets is `join`. It usually hurts. Try it fir
 
 The original question wasn't about same-day correlation — it was about whether **yesterday's** weather predicts today's market. That is a lag feature. `streamstats` builds it event-by-event without leaving the streaming pipeline.
 
-<SplunkSearch earliest="-2y" latest="now" spl={`index=s4c_stock_indices index_name=DAX
+<SplunkSearch earliest="-2y" latest="now" spl={`\`s4c_index_stocks\` index_name=DAX
 | eval day=strftime(_time, "%Y-%m-%d"), o=tonumber(mvindex(open,0)), c=tonumber(mvindex(close,0)), day_return=((c-o)/o)*100
 | stats avg(day_return) as day_return by day
-| append [ search index=s4c_meteo_historic city=Frankfurt
+| append [ search \`s4c_index_meteo_historic\` city=Frankfurt
     | eval day=coalesce(mvindex(date,0), strftime(_time, "%Y-%m-%d")), rain=tonumber(precipitation_sum)
     | stats avg(rain) as rain_mm by day ]
 | stats values(day_return) as day_return values(rain_mm) as rain_mm by day

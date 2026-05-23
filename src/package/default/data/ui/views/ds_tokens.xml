@@ -30,7 +30,7 @@
 		"ds_tjGb3Bj3": {
 			"type": "ds.search",
 			"options": {
-				"query": " |tstats count WHERE index=* OR index=_* groupby sourcetype source index host _time\n| top sourcetype showperc=0",
+				"query": " |tstats count WHERE `s4c_index_all` groupby sourcetype source index host _time\n| top sourcetype showperc=0",
 				"enableSmartSources": true
 			},
 			"name": "Search_1"
