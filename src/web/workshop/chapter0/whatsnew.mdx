@@ -2,11 +2,85 @@ import Link from '@splunk/react-ui/Link'
 
 # What's new in the app
 
-The repository does not ship a separate `WHATSNEW.md` file. **Source of truth for long-form release notes** is the <Link to="https://github.com/bautt/splunk4champions2/releases" openInNewContext>Releases</Link> page and tag descriptions on <Link to="https://github.com/bautt/splunk4champions2" openInNewContext>GitHub</Link>. Below: recent **app** versions in this build, then **highlights** from an earlier GitHub release so you can see the same story as the repo.
+The repository includes a root-level `WHATS_NEW.md` summary and the <Link to="https://github.com/bautt/splunk4champions2/releases" openInNewContext>Releases</Link> page remains the source for full tag descriptions on <Link to="https://github.com/bautt/splunk4champions2" openInNewContext>GitHub</Link>. Below: recent **app** versions in this build, then **highlights** from an earlier GitHub release so you can see the same story as the repo.
 
 If you build from source, the **exact** app version is shown on the **Setup** health check page and under **Settings → Apps → Splunk4Champions2**.
 
 ---
+
+## This build (2.11.77)
+
+- **Workshop-wide colour schemes:** the Setup colour picker now restyles the whole workshop (top chapter bar, subchapter bar, table headers, lab callouts, complete-lab cards, primary search button, Setup toggles) instead of just the lab blocks. Four schemes: **Blue / Navy** (default), **Brown / Dark Red**, **Blue / Yellow** (Ukrainian flag intensity), and **Pink / Orange** (Splunk.com brand intensity).
+- **Live preview in the picker:** switching schemes immediately previews a `LabBlock` callout and a complete-lab card so trainers see the effect before committing.
+- **Picker tucked away:** the colour scheme panel is collapsed by default behind a subtle *"change colour scheme"* link below the Setup health check, keeping Setup focused on readiness checks.
+- **Lab icons clarified:** atomic hands-on `LabBlock` callouts keep the hammer icon; the five complete-lab summary cards now use a flask icon to visually separate "single exercise" from "end-to-end lab".
+- **Scheme-aware primary buttons:** the workshop search button and the Setup toggle buttons (Standard / Large Room and the four scheme buttons) now match the active scheme instead of staying Splunk green, including hover and focus states.
+- **Theme-aware navigation:** chapter bar and section bar default to a pale blue tint that matches the Blue / Navy baseline; each scheme overrides them so the workshop visually agrees with itself end-to-end.
+- **Persistence unchanged:** the chosen scheme and the trainer display mode are still stored in browser local storage and broadcast via custom events so SPA navigation keeps the chosen theme.
+
+## 2.11.75
+
+- **Hands-on lab treatment:** new `LabBlock` callout (steel-blue, hammer icon) for atomic exercises and a deep-navy *complete-lab card* for the five end-to-end labs (Inspector Lab, Search Lab, Metrics Lab, Stocks — Events to Metrics, Publish a dashboard without login). Each complete lab opens with an upfront summary card.
+- **Chapter 3 reorder:** **SPL2** moved from the front of Chapter 3 to between **Search Quiz** and **MCP** so the search-performance arc reads end-to-end first.
+- **Live dashboard embeds in Chapter 5 Colors:** new `SplunkPanel` use embeds a live pie chart via `/app/?hideChrome=true` (the Splunk 10.x replacement for the removed `/embed/` route); static colour screenshots restored alongside.
+- **New Chapter 6 publish lab:** `chapter6/ds_publish.mdx` now has a hands-on lab on publishing a dashboard without login.
+- **Canvas viz page trimmed:** health-dashboard detour removed from `chapter6/ds_rcastley_vizs.mdx`.
+- **Chapter 2 asset swaps:** `journal_new.png` replaces `journal1.png` and `tsidx_new.png` replaces `tsidx1.png` (redrawn assets from v2.11.62); SmartStore "library" image floats inline with the analogy text.
+- **Weather data refresh:** scheduled ingest update of `current_2026.log.gz`.
+
+## 2.11.62
+
+- **App size reduction:** lossless PNG compression across `appserver/static/images/` and `www.log` gzipped; `current_2026.log.gz` reduced 37% from 8.2 MB to 5.2 MB; `inspector-dall-e.png` halved (505 KB → 123 KB); unused `hot_warm1/2.png` removed.
+- **Image redesigns:** `tsidx1.png` and `journal1.png` redrawn in the current workshop style; the journal asset aligns with on-disk `journal.zst` naming.
+- **City normalisation:** canonical city names in the bundled `current_2026.log.gz`, dashboard SPL updated to match.
+- **Search basics diagrams** clarified in the Chapter 3 walkthroughs.
+- **Splunk Cloud readiness pass** on the app package.
+
+## 2.11.54
+
+- **Package validation notes:** local package build was refreshed after the Cloud-readiness cleanup, and the current Cloud AppInspect status is documented in the root `WHATS_NEW.md`.
+- **Bundled-data decision:** the workshop keeps the current bundled data layout for now to avoid disrupting Enterprise workshop installs; future single-package Cloud work should prefer documented Splunk locations such as `lookups/` for CSV-style seed/reference data rather than a custom `seeddata/` folder.
+
+## 2.11.53
+
+- **Cloud-safe configuration cleanup:** removed app-shipped Phyphox HEC stanzas and added administrator-focused HEC setup guidance in the Phyphox chapter.
+- **Index and limit cleanup:** removed Cloud-incompatible `indexes.conf` settings while keeping index creation stanzas for on-prem installs, and removed app-shipped `limits.conf`; large stock/weather joins should use `inputlookup meteo_historic` or an administrator-owned platform setting.
+- **Sample token removed:** the Phyphox download dashboard no longer pre-fills a token-like value.
+
+## 2.11.52
+
+- **Cloud readiness maintenance:** escaped dashboard XML labels that used bare ampersands, added `sc_admin` to app metadata, switched Open-Meteo scripted input stanzas to the preferred absolute app `bin/` path form, and updated the bundled Splunk Python SDK.
+- **Cloud packaging review:** the remaining Cloud-only blockers are documented as packaging-profile work so the default workshop package stays stable for non-cloud installations.
+
+## 2.11.51
+
+- **Release notes catch-up:** root `WHATS_NEW.md` now includes the missing post-`2.10.83` updates through the current documentation/collateral build.
+- **Documentation and collateral:** README, participant handout, one-page flyer, architecture slide assets, and editable PowerPoint collateral were refreshed for workshop positioning and trainer use.
+
+## 2.11.50
+
+- **README:** expanded into a public landing page with workshop purpose, target audience, quick content overview, chapter-by-chapter lab descriptions, running guidance, data reference, and links to editable handout/flyer sources.
+
+## 2.11.49
+
+- **Participant handout:** new editable Markdown handout covering workshop flow, chapter guide, data reference, quick references, recent highlights, and PDF export guidance.
+- **One-page flyer:** new editable Markdown flyer for workshop promotion and PDF conversion.
+
+## 2.11.48
+
+- **Chapter 2 Data:** added distributed search / MapReduce content with a supporting architecture diagram to connect search-head/indexer behavior to data storage concepts.
+
+## 2.11.47
+
+- **README:** refreshed the chapter overview and removed oversized lab images from the public landing page flow.
+
+## 2.11.40
+
+- **Search examples:** simplified `tstats` tip text and related README content.
+
+## 2.11.39
+
+- **Search basics:** reduced the index-discovery `tstats` example to a compact one-liner for easier teaching.
 
 ## This build (2.11.27)
 
@@ -48,7 +122,7 @@ If you build from source, the **exact** app version is shown on the **Setup** he
 
 ## 2.10.84
 
-- **Chapter 3 (stocks and weather):** `join` examples that merge index data with historical meteo use **`inputlookup meteo_historic`** and a higher **`[subsearch] maxout`** in the app (`limits.conf`) + **`[meteo_historic]`** in `transforms.conf`, so the default **10,000**-row subsearch cap does not drop weather matches. See the <Link to="https://github.com/bautt/splunk4champions2" openInNewContext>repository</Link> for those files.
+- **Chapter 3 (stocks and weather):** `join` examples that merge index data with historical meteo use **`inputlookup meteo_historic`** and **`[meteo_historic]`** in `transforms.conf` so the weather side can avoid the default **10,000**-row subsearch cap. If a trainer still wants larger subsearch limits, that should be an administrator-owned platform setting outside the app.
 
 ---
 

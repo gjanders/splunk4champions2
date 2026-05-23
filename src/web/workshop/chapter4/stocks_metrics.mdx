@@ -1,5 +1,13 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 
+<div className="s4c-lab-summary">
+
+**What you'll do:** Explore ten years of stock index OHLCV events, preview the conversion, use `mcollect` to write metrics into `s4c_student_metrics`, then verify and chart them with `mcatalog` and `mstats`.
+
+**What you'll achieve:** You'll know how to turn existing event time-series into a metrics index and query multi-dimensional stock data efficiently.
+
+</div>
+
 ## Stock Index Metrics — Convert Events to Metrics
 
 The `s4c_stock_indices` index contains 10 years of daily OHLCV data for 9 global indexes as **events**.  
@@ -17,6 +25,8 @@ In this exercise you will use `mcollect` to push that data into `s4c_student_met
 | eval oldest=strftime(oldest,"%Y-%m-%d"), newest=strftime(newest,"%Y-%m-%d")
 | sort index_name`}></SplunkSearch>
 
+
+
 ---
 
 ### Step 2: Preview what will become metrics
@@ -24,6 +34,8 @@ In this exercise you will use `mcollect` to push that data into `s4c_student_met
 <SplunkSearch earliest="-10y" latest="now" spl={`\`s4c_index_stocks\`
 | table _time symbol index_name open high low close volume
 | sort -_time | head 20`}></SplunkSearch>
+
+
 
 ---
 
@@ -39,6 +51,8 @@ Remove the backtick comments from the `mcollect` line to actually write the data
 | fields _time symbol index_name open high low close volume
 \`\`\`| mcollect index=s4c_student_metrics prefix=stocks.\`\`\``}></SplunkSearch>
 
+
+
 > The full command when ready:  
 > `| mcollect index=s4c_student_metrics prefix=stocks.`
 
@@ -48,17 +62,23 @@ Remove the backtick comments from the `mcollect` line to actually write the data
 
 After running mcollect, confirm the data is in the metrics index:
 
+
 <SplunkSearch earliest="-10y" latest="now" spl={`| mcatalog values(metric_name) values(index_name) values(symbol)
     WHERE index=s4c_student_metrics metric_name=stocks.*`}></SplunkSearch>
+
+
 
 ---
 
 ### Step 5: Query with mstats
 
+
 <SplunkSearch earliest="-10y" latest="now" spl={`| mstats avg(stocks.close) as avg_close
     WHERE index=s4c_student_metrics
     BY index_name span=1y
 | timechart span=1y avg(avg_close) by index_name`}></SplunkSearch>
+
+
 
 ---
 

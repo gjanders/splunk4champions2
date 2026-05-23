@@ -1,6 +1,14 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
+<div className="s4c-lab-summary">
+
+**What you'll do:** Follow a seven-act investigation across web logs, stock prices, and weather data to test whether DAX closes weaker after rainy days in Frankfurt — discovering indexes, sampling events, and building the analysis step by step.
+
+**What you'll achieve:** You'll practice end-to-end data investigation in Splunk and learn to avoid classic search performance traps (early filtering, `tstats`, lookups instead of `join`) while answering a real business question.
+
+</div>
+
 ## The Investigation
 
 A colleague asks you a question over coffee:
@@ -28,6 +36,8 @@ A faster way: `tstats` reads the same information from the tsidx files directly,
 
 You now see `s4c_www`, `s4c_stock_indices`, `s4c_meteo_historic`, and `s4c_weather`. The first is web logs (not relevant for this investigation). The other three are your investigation surface.
 
+
+
 > **Lesson:** `tstats` on the tsidx is the fastest way to get index-level metadata.
 
 ---
@@ -47,6 +57,8 @@ Same for weather:
 | head 5`}></SplunkSearch>
 
 Note: `city`, `temperature_2m_max`, `precipitation_sum`, `date`.
+
+
 
 The shared key will be `exchange_city` (stocks) matched with `city` (weather), aligned by date. Good — no `join` will be required.
 
@@ -69,6 +81,8 @@ Splunk computes the average for **all 9 indexes** and then throws 8 away. Better
 
 Run both. In Job Inspector, compare `eventCount` and `command.search.index` time.
 
+
+
 > **Lesson:** push every filter as far left as possible. Index filters and field filters belong in the base search, not after a pipe.
 
 ---
@@ -85,6 +99,8 @@ The indexers already did the work for every city. Fix it by filtering in the bas
 
 <SplunkSearch earliest="-1y" latest="now" spl={`\`s4c_index_meteo_historic\` city=Frankfurt
 | stats avg(temperature_2m_max) as avg_temp`}></SplunkSearch>
+
+
 
 > **Lesson:** `| search` after the first pipe almost always indicates a filter that belongs in the base search.
 
@@ -105,6 +121,8 @@ A regular search scans every event:
 | sort -count`}></SplunkSearch>
 
 Both return the same numbers. Compare `runDuration` in Job Inspector — usually 10–50x faster.
+
+
 
 > **Lesson:** `tstats` reads from the tsidx and only sees indexed fields. For aggregations on `index`, `sourcetype`, `host`, `source`, and indexed field extractions, it is dramatically faster.
 
@@ -132,6 +150,8 @@ The natural reach for combining datasets is `join`. It usually hurts. Try it fir
 | stats values(avg_close) as avg_close values(avg_temp) as avg_temp by day
 | where isnotnull(avg_close) AND isnotnull(avg_temp)`}></SplunkSearch>
 
+
+
 > **Lesson:** `append` runs the second branch in parallel. The collapsing `stats values(...) by day` merges the two streams. No subsearch limit, no sequential wait.
 
 ---
@@ -154,6 +174,8 @@ The original question wasn't about same-day correlation — it was about whether
 | eval weather_yesterday=case(yesterday_rain>=5, "Rainy (5mm+)", true(), "Dry (<5mm)")
 | stats count as trading_days avg(day_return) as avg_return_pct stdev(day_return) as stdev_return by weather_yesterday
 | eval avg_return_pct=round(avg_return_pct,3), stdev_return=round(stdev_return,3)`}></SplunkSearch>
+
+
 
 You have your first answer. Read it carefully:
 

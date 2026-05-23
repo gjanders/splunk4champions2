@@ -1,6 +1,14 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
+<div className="s4c-lab-summary">
+
+**What you'll do:** Run four suspect searches, open Job Inspector to find the evidence in each case (schema-on-the-fly, field tax, wrong pipeline order, SmartStore cache warm-up), apply the fix, and confirm the win.
+
+**What you'll achieve:** You'll know how to read Job Inspector metrics, diagnose why a search is slow, and apply the right optimization — without mistaking a warm cache for a genius rewrite.
+
+</div>
+
 Four cases. Each one: **run the suspect search, open Job Inspector, find the evidence, run the fix, confirm the win.**
 
 Before you start: under the search bar, **Job → Edit Job Settings → Lifetime: 7 days** so your slow jobs do not expire while you compare them.
@@ -21,6 +29,8 @@ Before you start: under the search bar, **Job → Edit Job Settings → Lifetime
 <SplunkSearch earliest="-7d" latest="now" spl={`\`s4c_index_internal\` user=*
 | stats count by user`}></SplunkSearch>
 
+
+
 **The evidence:** open Job Inspector. Look at the overview line and the job properties.
 
 - `scanCount` will be huge — every `_internal` event in the time range
@@ -33,6 +43,8 @@ Before you start: under the search bar, **Job → Edit Job Settings → Lifetime
 
 <SplunkSearch earliest="-7d" latest="now" spl={`\`s4c_index_internal\` sourcetype=splunk*access user=*
 | stats count by user`}></SplunkSearch>
+
+
 
 **The confirmation:** `scanCount` collapses to roughly `eventCount`. Total runtime drops dramatically. Apply the two questions:
 
@@ -51,6 +63,8 @@ Before you start: under the search bar, **Job → Edit Job Settings → Lifetime
 <SplunkSearch earliest="-7d" latest="now" spl={`\`s4c_index_www\`
 | stats count by status`}></SplunkSearch>
 
+
+
 **The evidence:** in the execution-costs tree, look at `command.search.kv`. With no `| fields` to constrain Splunk, every field gets extracted on every event before stats runs.
 
 **The fix:** tell Splunk you only need `status`:
@@ -58,6 +72,8 @@ Before you start: under the search bar, **Job → Edit Job Settings → Lifetime
 <SplunkSearch earliest="-7d" latest="now" spl={`\`s4c_index_www\`
 | fields status
 | stats count by status`}></SplunkSearch>
+
+
 
 **The confirmation:** `command.search.kv` time drops; total runtime drops. `eventCount` is unchanged — the events themselves did not change, but the per-event work did.
 
@@ -73,6 +89,8 @@ Before you start: under the search bar, **Job → Edit Job Settings → Lifetime
 | stats avg(close) by index_name
 | where index_name="DAX"`}></SplunkSearch>
 
+
+
 **The evidence:**
 
 - `eventCount` covers all 9 indexes — Splunk aggregated everything and then threw 8 away
@@ -82,6 +100,8 @@ Before you start: under the search bar, **Job → Edit Job Settings → Lifetime
 
 <SplunkSearch earliest="-1y" latest="now" spl={`\`s4c_stock_indices\` index_name=DAX
 | stats avg(close)`}></SplunkSearch>
+
+
 
 **The confirmation:** `eventCount` drops to roughly one ninth. `command.search.index` and `command.search.rawdata` both shrink. The execution-cost tree is shorter and bushier than before.
 
@@ -97,6 +117,7 @@ In SmartStore environments, warm bucket copies live in object storage and get pu
 
 **The experiment:**
 
+
 1. Run this search once over a long range:
 
 <SplunkSearch earliest="-30d" latest="now" spl={`\`s4c_index_internal\` sourcetype=splunkd
@@ -109,6 +130,8 @@ In SmartStore environments, warm bucket copies live in object storage and get pu
 3. Re-run the exact same search.
 
 4. Compare. The `bucketcache.miss` values should drop towards zero. Runtime drops with them.
+
+
 
 **The lesson:** when you measure the impact of an optimisation, run **each** version of the search at least twice and compare the **second** runs. Both will have warm caches and the cache effect is factored out of your comparison.
 
@@ -123,6 +146,8 @@ Use the audit log to see the lispy efficiency (`eventCount / scanCount`) of your
 | eval lispy_efficiency = event_count / scan_count
 | where scan_count > 100 AND total_run_time > 2
 | table _time total_run_time event_count scan_count lispy_efficiency user savedsearch_name search`}></SplunkSearch>
+
+
 
 ---
 
