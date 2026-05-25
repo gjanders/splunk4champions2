@@ -19,7 +19,7 @@ In this lab you will explore real weather metrics collected by the TA-open-meteo
 
 Use `mcatalog` to explore what weather metrics are available:
 
-<SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(metric_name) WHERE \`s4c_index_meteo\``}></SplunkSearch>
+<SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(metric_name) WHERE \`s4c_index_meteo_metrics\``}></SplunkSearch>
 
 Now find all the dimensions (cities and countries) reporting data:
 
